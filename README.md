@@ -10,7 +10,7 @@ nano internsctl
 
 ```
 
-3. Copy the entire Bash script and paste it into the text editor.
+2. Copy the entire Bash script and paste it into the text editor.
 
 5. Save the file by pressing Ctrl + O (in nano) and press Enter.
 
