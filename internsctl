@@ -1,0 +1,105 @@
+#!/bin/bash
+
+# internsctl script
+
+# Section A
+if [ "$1" == "--version" ]; then
+    echo "internsctl v0.1.0"
+    exit 0
+elif [ "$1" == "--help" ]; then
+    echo "Usage: internsctl [OPTIONS]"
+    echo "Options:"
+    echo "  --version   Display the version of internsctl"
+    echo "  --help      Display this help message"
+    echo "  cpu getinfo          Get CPU information"
+    echo "  memory getinfo       Get memory information"
+    echo "  user create <username>   Create a new user"
+    echo "  user list              List all regular users"
+    echo "  user list --sudo-only  List users with sudo permissions"
+    echo "  file getinfo <file-name>  Get information about a file"
+    echo "  file getinfo [options] <file-name>  Get specific information about a file"
+    exit 0
+fi
+
+# Section B
+case "$1" in
+    "cpu" )
+        if [ "$2" == "getinfo" ]; then
+            lscpu
+        else
+            echo "Invalid command. Use 'internsctl --help' for usage information."
+            exit 1
+        fi
+        ;;
+    "memory" )
+        if [ "$2" == "getinfo" ]; then
+            free
+        else
+            echo "Invalid command. Use 'internsctl --help' for usage information."
+            exit 1
+        fi
+        ;;
+    "user" )
+        case "$2" in
+            "create" )
+                if [ -z "$3" ]; then
+                    echo "Please provide a username. Usage: internsctl user create <username>"
+                    exit 1
+                fi
+                useradd "$3"
+                passwd "$3"
+                echo "User '$3' created successfully."
+                ;;
+            "list" )
+                if [ "$3" == "--sudo-only" ]; then
+                    grep -Po '^sudo.+:\K.*$' /etc/group | tr ',' '\n'
+                else
+                    cut -d: -f1 /etc/passwd
+                fi
+                ;;
+            * )
+                echo "Invalid command. Use 'internsctl --help' for usage information."
+                exit 1
+                ;;
+        esac
+        ;;
+    "file" )
+        if [ "$2" == "getinfo" ]; then
+            file_name="$3"
+            if [ -z "$file_name" ]; then
+                echo "Please provide a file name. Usage: internsctl file getinfo <file-name>"
+                exit 1
+            fi
+            if [ ! -e "$file_name" ]; then
+                echo "File '$file_name' does not exist."
+                exit 1
+            fi
+
+            case "$4" in
+                "--size" | "-s" )
+                    stat -c%s "$file_name"
+                    ;;
+                "--permissions" | "-p" )
+                    stat -c%a "$file_name"
+                    ;;
+                "--owner" | "-o" )
+                    stat -c%U "$file_name"
+                    ;;
+                "--last-modified" | "-m" )
+                    stat -c%y "$file_name"
+                    ;;
+                * )
+                    echo "Invalid option. Use 'internsctl --help' for usage information."
+                    exit 1
+                    ;;
+            esac
+        else
+            echo "Invalid command. Use 'internsctl --help' for usage information."
+            exit 1
+        fi
+        ;;
+    * )
+        echo "Invalid command. Use 'internsctl --help' for usage information."
+        exit 1
+        ;;
+esac
