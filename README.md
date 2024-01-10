@@ -1,7 +1,7 @@
 # Task1_-Linux-Module
 XenonStack Placement Technical Task
 
-###Getting Started 
+### Getting Started
 
 1. You can use any text editor of your choice, such as nano, vim, etc.
 For example, using nano:
