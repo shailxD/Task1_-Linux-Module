@@ -3,21 +3,24 @@ XenonStack Placement Technical Task
 
 ### Getting Started
 
-1. You can use any text editor of your choice, such as nano, vim, etc.
-For example, using nano:
-    ```bash
+1. You can use any text editor of your choice, such as nano, vim, etc. For example, using nano:
+
+```bash
 nano internsctl
+
 ```
 
-1. Copy the entire Bash script and paste it into the text editor.
+3. Copy the entire Bash script and paste it into the text editor.
 
-3. Save the file by pressing Ctrl + O (in nano) and press Enter.
+5. Save the file by pressing Ctrl + O (in nano) and press Enter.
 
-5. Close the text editor by pressing Ctrl + X (in nano).
+7. Close the text editor by pressing Ctrl + X (in nano).
 
-7. Make the script executable by running the following command:
+9. Make the script executable by running the following command:
+
 ```bash
 chmod +x internsctl
+
 ```
 
 Now, your Bash script is saved and ready to be executed. You can run it by typing ./internsctl in the terminal. For example:
